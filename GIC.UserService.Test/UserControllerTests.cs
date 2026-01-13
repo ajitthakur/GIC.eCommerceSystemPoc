@@ -11,34 +11,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 
-
-public class UserDetailPartialDto 
-{
-    public UserDetailDto userDetail { get; set; }
-}
-
-
-public class UserDetailDto
-{
-    public UserDto result { get; set; }
-}
-
-
-
-public class UserDtoPartial{
-    public string id { get; set; }
-    public string name { get; set; }
-    public string email { get; set; }
-}
-
-
-public class UserDto 
-{
-    public Guid Id { get; set; }    
-    public string Name { get; set; }    
-    public string Email { get; set; }
-}
-
 public class UserControllerTests 
 {
     private readonly HttpClient _client;
@@ -91,3 +63,26 @@ public class UserControllerTests
     }
 }
 
+public class UserDetailPartialDto
+{
+    public UserDetailDto userDetail { get; set; }
+}
+
+public class UserDetailDto
+{
+    public UserDto result { get; set; }
+}
+
+public class UserDtoPartial
+{
+    public string id { get; set; }
+    public string name { get; set; }
+    public string email { get; set; }
+}
+
+public class UserDto
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+}
