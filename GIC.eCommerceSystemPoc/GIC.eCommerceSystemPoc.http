@@ -1,0 +1,6 @@
+@GIC.eCommerceSystemPoc_HostAddress = http://localhost:5026
+
+GET {{GIC.eCommerceSystemPoc_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
