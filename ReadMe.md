@@ -20,8 +20,8 @@ This project demonstrates microservices — User Service and Order Service — t
 **3. Workflow**
 User Service - Create User and publishes UserCreated events to Kafka.
 Order Service -  consumes users topic to react to new users.
-Order Service - Create Order And publishes OrderCreated events to Kafka
-Other services can consume orders topic for downstream processing.
+Order Service - Create Order And publishes OrderCreated events to Kafka.
+User Service - Consume Order events from Kafka and store for users.
 
 **4. AI Prompt Used**
 Alternative for MemoryCache
