@@ -13,7 +13,7 @@ This project demonstrates microservices — User Service and Order Service — t
  Order Service apps → localhost:5001
  Container Kafka apps → kafka:29092
 
- Open Swagger for all Services Application to perfrom test on API
+ Open Swagger for all Services Application to perfrom **Test** on API
  http://localhost:5001/swagger/
  http://localhost:5002/swagger/
 
