@@ -13,8 +13,8 @@
 
 //    public UserControllerTests(WebApplicationFactory<Program> factory)
 //    {
-//            _client = factory.CreateClient(); ;
-//    }   
+//        _client = factory.CreateClient(); ;
+//    }
 
 //    [Fact]
 //    public async Task CreateUser_Should_ReturnCreatedUser()
@@ -52,5 +52,5 @@
 //        fetchedUser.Id.Should().Be(createdUser.Id);
 //    }
 
-    
+
 //}
