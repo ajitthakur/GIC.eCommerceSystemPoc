@@ -39,11 +39,11 @@ namespace GIC.UserService.Infrastructure
                 };
 
                  var deliveryResult = await _producer.ProduceAsync(eventTopic, msg);
-                _logger.LogInformation($"Order Service - Publish {eventTopic} , {deliveryResult.TopicPartitionOffset}");
+                _logger.LogInformation($"User Service - Publish {eventTopic} , {deliveryResult.TopicPartitionOffset}");
             }
             catch (ProduceException<Null, string> ex)
             {
-                _logger.LogError($"Order Service Publish failed: {ex.Error.Reason}");
+                _logger.LogError($"User Service Publish failed: {ex.Error.Reason}");
             }
             catch (Exception ex)
             {

@@ -82,8 +82,8 @@ namespace GIC.OrderService.Controllers
             try
             {
                 var orderDetail = await _orderDataService.GetAllOrderById(id);
-                _logger.LogInformation(JsonConvert.SerializeObject(_userDataCache));
-                return Ok(new { orderDetail, User = (_userDataCache.ContainsKey(orderDetail.UserId) ? _userDataCache[orderDetail.UserId] : ("","") )});
+                _logger.LogInformation(JsonConvert.SerializeObject(_userDataCache));                
+                return Ok(new { orderDetail, User = (_userDataCache.ContainsKey(orderDetail.UserId) ? JsonConvert.SerializeObject(_userDataCache[orderDetail.UserId]) : "{}" )});
             }
             catch (Exception ex)
             {

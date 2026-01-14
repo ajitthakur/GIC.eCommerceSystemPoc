@@ -94,7 +94,7 @@ namespace GIC.UserService.Controllers
                 }
 
                 _logger.LogInformation(JsonConvert.SerializeObject(_orderDataCache));                
-                return Ok(new { UserDetail = userExist , OrderPlaced = _orderDataCache.ContainsKey(id)? _orderDataCache[id]: new List<string>()});
+                return Ok(new { UserDetail = userExist , OrderPlaced = _orderDataCache.ContainsKey(id)? JsonConvert.SerializeObject(_orderDataCache[id]) : ""});
             }
             catch (Exception ex)
             {

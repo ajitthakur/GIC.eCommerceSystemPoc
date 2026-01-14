@@ -19,7 +19,7 @@ namespace GIC.UserService.Infrastructure
             ILogger<KafkaEventConsumeService> logger
             ,ConcurrentDictionary<Guid, List<string>> orderDataCache)
         {
-            //_orderDataCache = orderDataCache;
+            _orderDataCache = orderDataCache;
             _kafkaOption = kafkaOption.Value;
             _logger = logger;
 
@@ -34,32 +34,48 @@ namespace GIC.UserService.Infrastructure
             _consumer = new ConsumerBuilder<Ignore, string>(consumerConfig).Build();
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {            
-            _consumer.Subscribe(consumeEventTopic);
-
-            while (!stoppingToken.IsCancellationRequested)
+        {
+            try
             {
-                await Task.Run(() => ProcessMessageObject(stoppingToken), stoppingToken);
-                await Task.Delay(10, stoppingToken);
-            }
+                _consumer.Subscribe(consumeEventTopic);
 
-            _consumer.Close();
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    await Task.Run(() => ProcessMessageObject(stoppingToken), stoppingToken);
+                    await Task.Delay(10, stoppingToken);
+                }
+
+                _consumer.Close();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error Consume order Event 1");
+            }
         }
 
         public void ProcessMessageObject(CancellationToken stoppingToken)
         {
             try
-            {
+            {                
                 var consumeResult = _consumer.Consume(stoppingToken);
                 var message = consumeResult.Message.Value;
                 var orderCreatedEvent = JsonConvert.DeserializeObject<OrderCreatedEvent>(message);
-                _orderDataCache[orderCreatedEvent.UserId].Add(orderCreatedEvent.Product);
+
+                if (_orderDataCache.ContainsKey(orderCreatedEvent.UserId))
+                {
+                    _orderDataCache[orderCreatedEvent.UserId].Add(orderCreatedEvent.Product);
+                }
+                else
+                {
+                    _orderDataCache[orderCreatedEvent.UserId] = new List<string> { orderCreatedEvent.Product};
+                }
+                
                 Console.WriteLine(message);
                 _logger.LogInformation($"Consume Order Event:{message}");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error Consume order Event");
+                _logger.LogError(ex, "Error Consume order Event 2");
             }
         }
     }

@@ -13,11 +13,17 @@ using Xunit;
 
 public class UserControllerTests 
 {
-    private readonly HttpClient _client;
+    private readonly HttpClient _userClient;
+    private readonly HttpClient _orderClient;
 
     public UserControllerTests()
-    {        
-        _client = new HttpClient
+    {
+        _userClient = new HttpClient
+        {
+            BaseAddress = new System.Uri("https://localhost:5001")//User API            
+        };
+
+        _orderClient = new HttpClient
         {
             BaseAddress = new System.Uri("https://localhost:5001")//User API            
         };
@@ -31,7 +37,7 @@ public class UserControllerTests
         var newUser = new UserDto { Name = $"ajit{Guid.NewGuid()}", Email = $"ajit{Guid.NewGuid()}@testemail.com" };
 
         // Act
-        var response = await _client.PostAsJsonAsync("User", newUser);
+        var response = await _userClient.PostAsJsonAsync("User", newUser);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -47,11 +53,11 @@ public class UserControllerTests
     {
         // First create a user
         var newUser = new UserDto { Name = $"ajit{Guid.NewGuid()}", Email = $"ajit{Guid.NewGuid()}@testemail.com" };
-        var createResponse = await _client.PostAsJsonAsync("User", newUser);
+        var createResponse = await _userClient.PostAsJsonAsync("User", newUser);
         var createdUser = await createResponse.Content.ReadFromJsonAsync<UserDto>();
 
         // Act: fetch by ID
-        var getResponse = await _client.GetAsync($"User/{createdUser!.Id}");
+        var getResponse = await _userClient.GetAsync($"User/{createdUser!.Id}");
 
         // Assert
         getResponse.StatusCode.Should().Be(HttpStatusCode.OK);
